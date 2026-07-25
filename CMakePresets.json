@@ -96,6 +96,44 @@
             }
         },
         {
+            "name": "gcc",
+            "hidden": true,
+            "generator": "Unix Makefiles"
+        },
+        {
+            "name": "linux",
+            "hidden": true,
+            "inherits": [
+                "default",
+                "gcc"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "linux-64-bit",
+            "hidden": true,
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": {
+                    "type": "STRING",
+                    "value": "x64-linux"
+                }
+            }
+        },
+        {
+            "name": "linux-32-bit",
+            "hidden": true,
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": {
+                    "type": "STRING",
+                    "value": "x86-linux"
+                }
+            }
+        },
+        {
             "name": "32-bit",
             "hidden": true,
             "architecture": {
@@ -154,6 +192,42 @@
                 "debug"
             ],
             "toolchainFile": "${sourceDir}/cmake/windows-x86-64-clang/toolchain.cmake"
+        },
+        {
+            "name": "linux-x86-64-debug",
+            "inherits": [
+                "linux",
+                "linux-64-bit",
+                "debug"
+            ],
+            "toolchainFile": "${sourceDir}/cmake/linux-x86-64/toolchain.cmake"
+        },
+        {
+            "name": "linux-x86-64-release",
+            "inherits": [
+                "linux",
+                "linux-64-bit",
+                "release"
+            ],
+            "toolchainFile": "${sourceDir}/cmake/linux-x86-64/toolchain.cmake"
+        },
+        {
+            "name": "linux-x86-32-debug",
+            "inherits": [
+                "linux",
+                "linux-32-bit",
+                "debug"
+            ],
+            "toolchainFile": "${sourceDir}/cmake/linux-x86-32/toolchain.cmake"
+        },
+        {
+            "name": "linux-x86-32-release",
+            "inherits": [
+                "linux",
+                "linux-32-bit",
+                "release"
+            ],
+            "toolchainFile": "${sourceDir}/cmake/linux-x86-32/toolchain.cmake"
         }
     ],
     "buildPresets": [
@@ -182,6 +256,15 @@
             "nativeToolOptions": [
                 "/property:VCToolsVersion=14.51.36231"
             ]
+        },
+        {
+            "name": "linux",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
         },
         {
             "name": "release",
@@ -240,6 +323,38 @@
                 "lhs": "${hostSystemName}",
                 "rhs": "Windows"
             }
+        },
+        {
+            "name": "linux-x86-64-debug",
+            "configurePreset": "linux-x86-64-debug",
+            "inherits": [
+                "linux",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-64-release",
+            "configurePreset": "linux-x86-64-release",
+            "inherits": [
+                "linux",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-32-debug",
+            "configurePreset": "linux-x86-32-debug",
+            "inherits": [
+                "linux",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-32-release",
+            "configurePreset": "linux-x86-32-release",
+            "inherits": [
+                "linux",
+                "default"
+            ]
         }
     ],
     "testPresets": [
@@ -270,6 +385,15 @@
                 "type": "equals",
                 "lhs": "${hostSystemName}",
                 "rhs": "Windows"
+            }
+        },
+        {
+            "name": "linux",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
             }
         },
         {
@@ -323,6 +447,38 @@
             "configurePreset": "windows-x86-64-clang",
             "inherits": [
                 "windows",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-64-debug",
+            "configurePreset": "linux-x86-64-debug",
+            "inherits": [
+                "linux",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-64-release",
+            "configurePreset": "linux-x86-64-release",
+            "inherits": [
+                "linux",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-32-debug",
+            "configurePreset": "linux-x86-32-debug",
+            "inherits": [
+                "linux",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-32-release",
+            "configurePreset": "linux-x86-32-release",
+            "inherits": [
+                "linux",
                 "default"
             ]
         }
