@@ -43,7 +43,7 @@
             "generator": "Visual Studio 18 2026",
             "toolset": {
                 "strategy": "set",
-                "value": "host=x64,version=14.50"
+                "value": "host=x64,version=14.51"
             },
             "cacheVariables": {
                 "CMAKE_SYSTEM_VERSION": {
@@ -61,6 +61,33 @@
             "inherits": [
                 "default",
                 "vs2026"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "clang-cl",
+            "hidden": true,
+            "generator": "Ninja",
+            "cacheVariables": {
+                "CMAKE_SYSTEM_VERSION": {
+                    "type": "STRING",
+                    "value": "10.0.26100"
+                }
+            },
+            "environment": {
+                "ClearDevCommandPromptEnvVars": "false"
+            }
+        },
+        {
+            "name": "windows-clang",
+            "hidden": true,
+            "inherits": [
+                "default",
+                "clang-cl"
             ],
             "condition": {
                 "type": "equals",
@@ -119,6 +146,14 @@
                 "release"
             ],
             "toolchainFile": "${sourceDir}/cmake/windows-x86-64/toolchain.cmake"
+        },
+        {
+            "name": "windows-x86-64-clang",
+            "inherits": [
+                "windows-clang",
+                "debug"
+            ],
+            "toolchainFile": "${sourceDir}/cmake/windows-x86-64-clang/toolchain.cmake"
         }
     ],
     "buildPresets": [
@@ -145,7 +180,7 @@
                 "rhs": "Windows"
             },
             "nativeToolOptions": [
-                "/property:VCToolsVersion=14.44.35207"
+                "/property:VCToolsVersion=14.51.36231"
             ]
         },
         {
@@ -193,6 +228,18 @@
                 "windows",
                 "default"
             ]
+        },
+        {
+            "name": "windows-x86-64-clang",
+            "configurePreset": "windows-x86-64-clang",
+            "inherits": [
+                "default"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
         }
     ],
     "testPresets": [
@@ -267,6 +314,14 @@
             "configurePreset": "windows-x86-64-release",
             "inherits": [
                 "release",
+                "windows",
+                "default"
+            ]
+        },
+        {
+            "name": "windows-x86-64-clang",
+            "configurePreset": "windows-x86-64-clang",
+            "inherits": [
                 "windows",
                 "default"
             ]
